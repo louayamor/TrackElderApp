@@ -1,10 +1,13 @@
 package itbsgl.louayamor.trackelder;
 
 import android.Manifest;
+import android.content.pm.PackageManager;
 import android.os.Bundle;
+import android.widget.Toast;
 
 import com.google.android.material.bottomnavigation.BottomNavigationView;
 
+import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.app.ActivityCompat;
 import androidx.navigation.NavController;
@@ -41,6 +44,32 @@ public class MainActivity extends AppCompatActivity {
         ActivityCompat.requestPermissions(MainActivity.this,
                 new String[]{Manifest.permission.SEND_SMS},
                 1);
+
+        // show dialog box of permission request
+
     }
 
+    // callback du requestPermission
+    @Override
+    public void onRequestPermissionsResult(int requestCode, @NonNull String[] permissions, @NonNull int[] grantResults) {
+        super.onRequestPermissionsResult(requestCode, permissions, grantResults);
+        if(requestCode == 1)
+        {
+            if (grantResults.length>0)
+            {
+                if (grantResults[0]== PackageManager.PERMISSION_GRANTED)
+                {
+
+                }
+                else{
+                    Toast.makeText(this, "Permission denied", Toast.LENGTH_SHORT).show();
+                    finish();
+                }
+            }
+            else{
+                Toast.makeText(this, "Permission denied", Toast.LENGTH_SHORT).show();
+                finish();
+            }
+        }
+    }
 }
